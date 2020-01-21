@@ -31,39 +31,40 @@ func main() {
 
 	var line1CoordList []Point
 	line1CoordList = append(line1CoordList, Point{0,0})
-	//fmt.Printf("line1CoordList 1: %v\n", line1CoordList)
 	for _, opCode := range line1 {
-		//fmt.Printf("Before cood is added - Line 1: %v, opCode: %v, index: %d\n", line1CoordList, opCode, i)
 		line1CoordList = addCoordinatesToListFromOpCode(line1CoordList, opCode)
-		//fmt.Printf("After coord is added - Line 1: %v, opCode: %v, index: %d\n", line1CoordList, opCode, i)
 	}
 	var line2CoordList []Point
 	line2CoordList = append(line2CoordList, Point{0,0})
 	for _, opCode := range line2 {
 		line2CoordList = addCoordinatesToListFromOpCode(line2CoordList, opCode)
-		//fmt.Printf("Line 2: %v\n", line2CoordList)
 	}
 
 	// find common coordinate and compare distance
 	var shortestDist int
 	var closestPoint Point
-	for _, point1 := range line1CoordList {
-		for _, point2 := range line2CoordList {
+	var stepsToIntersection int
+	for i, point1 := range line1CoordList {
+		for j, point2 := range line2CoordList {
 			if point1.x == point2.x && point1.y == point2.y {
 				if point1.x == 0 && point2.x == 0 && point1.y == 0 && point2.y == 0 {
 					continue
 				}
-				fmt.Printf("Fount intersection at %v \n", point1)
+				fmt.Printf("Found intersection at %v \n", point1)
 				distance := Abs(point1.x) + Abs(point1.y)
-				fmt.Printf("Fount distance: %v \n", distance)
+				fmt.Printf("Found distance: %v \n", distance)
+				if stepsToIntersection == 0 {
+					stepsToIntersection = i+j
+					fmt.Printf("Total steps to first intersection: %v\n", stepsToIntersection)
+				}
 				if shortestDist == 0 {
 					shortestDist = distance
 				}
 				if distance < shortestDist {
 					shortestDist = distance
 					closestPoint = point1
-
 				}
+
 			}
 		}
 	}
@@ -76,7 +77,6 @@ func addCoordinatesToListFromOpCode(lineCoordList []Point, opCode string) []Poin
 	//   x,y
 	// R/L, U/D
 	// [Point{0,0}, Point{0,1}]
-
 	var numOfPositionsToMove int
 
 	if strings.HasPrefix(opCode, "R") {
