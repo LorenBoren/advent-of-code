@@ -30,7 +30,10 @@ func main() {
 			fmt.Printf("Error converting string slice to int slice")
 		}
 	}
-	fmt.Printf("intArray: %v\n", intInputArr)
+	//per the instructions, "replace position 1 with the value 12 and replace position 2 with the value 2"
+	intInputArr[1] = 12
+	intInputArr[2] = 2
+	fmt.Printf("start intArray: %v\n", intInputArr)
 	for i := 0; i < len(intInputArr); i=i+4 {
 		// the program is finished and should immediately halt
 		if intInputArr[i] == 99 {
@@ -39,14 +42,19 @@ func main() {
 		}
 		// add
 		if intInputArr[i] == 1 {
-			fmt.Printf("adding: %v + %v to get %v\n", intInputArr[intInputArr[i+1]], intInputArr[intInputArr[i+2]], intInputArr[intInputArr[i+1]] + intInputArr[intInputArr[i+2]])
-			intInputArr[intInputArr[i+3]] = intInputArr[intInputArr[i+1]] + intInputArr[intInputArr[i+2]]
+			sum := intInputArr[intInputArr[i+1]] + intInputArr[intInputArr[i+2]]
+			intInputArr[intInputArr[i+3]] = sum
 			continue
 		}
 		// multiply
 		if intInputArr[i] == 2 {
-			fmt.Printf("multiplying: %v + %v to get %v\n", intInputArr[intInputArr[i+1]], intInputArr[intInputArr[i+2]], intInputArr[intInputArr[i+1]] * intInputArr[intInputArr[i+2]])
-			intInputArr[intInputArr[i+3]] = intInputArr[intInputArr[i+1]] * intInputArr[intInputArr[i+2]]
+			product := intInputArr[intInputArr[i+1]] * intInputArr[intInputArr[i+2]]
+			intInputArr[intInputArr[i+3]] = product
+			continue
+		} else {
+			fmt.Printf("SOMETHING WENT WRONG!!! INVADID OPCODE:  %v\n", intInputArr[i])
 		}
 	}
+	fmt.Printf("end intArray: %v\n", intInputArr)
+
 }
